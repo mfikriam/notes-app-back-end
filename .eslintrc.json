@@ -12,6 +12,7 @@
     "no-underscore-dangle": "off",
     "import/no-extraneous-dependencies": "off",
     "camelcase": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "linebreak-style": "off"
   }
 }
