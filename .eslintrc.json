@@ -13,6 +13,7 @@
     "import/no-extraneous-dependencies": "off",
     "camelcase": "off",
     "object-curly-newline": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "operator-linebreak": "off"
   }
 }

@@ -1,10 +1,16 @@
+// ? import dotenv and run its configurations
 require('dotenv').config();
 
 const Hapi = require('@hapi/hapi');
+
+// ? notes
 const notes = require('./api/notes');
 // const NotesService = require('./services/inMemory/NotesService');
 const NotesService = require('./services/postgres/NotesService');
 const NotesValidator = require('./validator/notes');
+
+// ? Exceptions Types
+const ClientError = require('./exceptions/ClientError');
 
 const init = async () => {
   const notesService = new NotesService();
@@ -25,6 +31,38 @@ const init = async () => {
       service: notesService,
       validator: NotesValidator,
     },
+  });
+
+  server.ext('onPreResponse', (request, h) => {
+    const { response } = request;
+
+    if (response instanceof Error) {
+      // * handling client errors internally
+      if (response instanceof ClientError) {
+        const newResponse = h.response({
+          status: 'fail',
+          message: response.message,
+        });
+        newResponse.code(response.statusCode);
+        return newResponse;
+      }
+
+      // * maintain native hapi handling of client errors, such as 404, etc
+      if (!response.isServer) {
+        return h.continue;
+      }
+
+      // * handling server errors as needed
+      const newResponse = h.response({
+        status: 'error',
+        message: 'Terjadi kegagalan pada server kami',
+      });
+      newResponse.code(500);
+      return newResponse;
+    }
+
+    // * if not an error, continue with the previous response (without intervening)
+    return h.continue;
   });
 
   await server.start();

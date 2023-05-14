@@ -1,4 +1,11 @@
-const mapDBToModel = ({ id, title, body, tags, created_at, updated_at }) => ({
+const mapDBToModel = ({
+  id,
+  title,
+  body,
+  tags,
+  created_at,
+  updated_at,
+}) => ({
   id,
   title,
   body,
