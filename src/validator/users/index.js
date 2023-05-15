@@ -1,5 +1,5 @@
-const InvariantError = require('../../exceptions/InvariantError');
 const { UserPayloadSchema } = require('./schema');
+const InvariantError = require('../../exceptions/InvariantError');
 
 const UsersValidator = {
   validateUserPayload: (payload) => {
