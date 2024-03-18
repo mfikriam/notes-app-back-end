@@ -1,5 +1,5 @@
 node_modules
 notes-api-webserver.pem
-.env
-.prod.env
+# .env
+# .prod.env
 src/api/uploads/file
